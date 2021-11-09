@@ -100,7 +100,15 @@ kubectl create namespace cymbal-shops
 kubectl create serviceaccount --namespace cymbal-shops cymbal-ksa
 ```
 
-Create the GCP Service Account as YAML:
+Grant the `config-connector` Google service account `Cloud Memorystore` service account creator permissions.
+
+```
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member "serviceAccount:config-connector@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role roles/iam.serviceAccountCreator
+```
+
+Use Config Connector to create `cymbal-gsa` [Cloud Service Account](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount#sample_yamls) in your project:
 
 ```
 kubectl apply -f cymbal-gsa.yaml
@@ -153,7 +161,7 @@ kubectl annotate serviceaccount \
 
 ### 7 - Use Config Connector to create a Cloud Memorystore Instance.
 
-- Grant the `config-connector` Google service account `Cloud Memorystore` read-write permissions.
+- Grant the `config-connector` Google service account `Cloud Memorystore` instance creator permissions.
 
 ```
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
