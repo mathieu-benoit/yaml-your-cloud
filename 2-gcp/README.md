@@ -95,7 +95,7 @@ pod/cnrm-webhook-manager-567789d76c-thcj5 condition met
 
 ### 6 - Set up Workload Identity for GKE. 
 
-GKE Workload Identity is a mapping from a GCP IAM service account to a Kubernetes Service Account. You then assign IAM roles to your GCP service account which then apply to a K8s service account, mounted into a pod. This allows your Kubernetes workloads to have specific GCP permissions. In our case, we'll configure the GCP service account [from within Config Connector](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#config-connector), then use that service account mapping to let the Cymbal Shops app (inside GKE) access Cloud Memorystore (in hosted GCP).
+GKE Workload Identity is a mapping from a GCP IAM service account to a Kubernetes Service Account. You then assign IAM roles to your GCP service account which then apply to a K8s service account, mounted into a pod. This allows your Kubernetes workloads to have specific GCP permissions. We'll configure the GCP service account [with Config Connector](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#config-connector).
 
 Create your Kubernetes service account:
 
@@ -156,14 +156,6 @@ kubectl annotate serviceaccount \
 ```
 
 ### 7 - Use Config Connector to create a Cloud Memorystore Instance.
-
-- Grant the `cymbal-gsa` Google service account `Cloud Memorystore` read-write permissions.
-
-```
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member "serviceAccount:cymbal-gsa@${PROJECT_ID}.iam.gserviceaccount.com" \
-  --role roles/redis.editor
-```
 
 - Use Config Connector to spin up a new [Cloud Memorystore Redis](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance#sample_yamls) instance in your project.
 
