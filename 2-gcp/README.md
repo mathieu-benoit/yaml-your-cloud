@@ -157,14 +157,6 @@ kubectl annotate serviceaccount \
 
 ### 7 - Use Config Connector to create a Cloud Memorystore Instance.
 
-- Grant the `cymbal-gsa` Google service account `Cloud Memorystore` read-write permissions.
-
-```
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member "serviceAccount:cymbal-gsa@${PROJECT_ID}.iam.gserviceaccount.com" \
-  --role roles/redis.editor
-```
-
 - Use Config Connector to spin up a new [Cloud Memorystore Redis](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance#sample_yamls) instance in your project.
 
 ```
